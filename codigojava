@@ -1,0 +1,55 @@
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText editText;
+    private Button addButton;
+    private TextView textView;
+    private ArrayList<String> dataList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText = findViewById(R.id.editText);
+        addButton = findViewById(R.id.addButton);
+        textView = findViewById(R.id.textView);
+        dataList = new ArrayList<>();
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String data = editText.getText().toString();
+                if (!data.isEmpty()) {
+                    // Agrega el nuevo dato al final de la lista
+                    dataList.add(data);
+
+                    // Actualiza el contenido del TextView mostrando la posición del nuevo elemento
+                    updateTextView();
+
+                    editText.setText("");
+                }
+            }
+        });
+    }
+
+    private void updateTextView() {
+        // Construye la cadena mostrando el índice (posición + 1) y el valor
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < dataList.size(); i++) {
+            result.append("Posición ").append(i + 1).append(": ").append(dataList.get(i)).append("\n");
+        }
+
+        // Establece el contenido del TextView con la cadena resultante
+        textView.setText(result.toString());
+    }
+}
